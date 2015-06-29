@@ -4,7 +4,7 @@ Compile:
 	`g++ wordazzle.cpp -o wordazzle -std=c++11`
 
 Launch:
-	`(cat input ; cat words100) | ./wordazzle`
+	`cat input words100 | ./wordazzle`
 
 Input is of following format:
 ```

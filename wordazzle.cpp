@@ -41,75 +41,42 @@ int move(const unsigned int &start, const unsigned int &w, const unsigned int &h
 	switch (m)
 	{
 		case EMove::N:
-			if (start < w)
-			{
-				return -1;
-			} else {
+			if (!(start < w))
 				return start - w;
-			}
 			break;
 		case EMove::NE:
-			if (start < w || ((start + 1) % w == 0))
-			{
-				return -1;
-			} else {
+			if (!(start < w || ((start + 1) % w == 0)))
 				return start - w + 1;
-			}
 			break;
 		case EMove::E:
-			if ((start + 1) % w == 0)
-			{
-				return -1;
-			} else {
+			if (!((start + 1) % w == 0))
 				return start + 1;
-			}
 			break;
 		case EMove::SE:
-			if (((start + w) > (w * h - 1)) || ((start + 1) % w == 0))
-			{
-				return -1;
-			} else {
+			if (!(((start + w) > (w * h - 1)) || ((start + 1) % w == 0)))
 				return start + w + 1;
-			}
 			break;
 		case EMove::S:
-			if ((start + w) > (w * h - 1))
-			{
-				return -1;
-			} else {
+			if (!((start + w) > (w * h - 1)))
 				return start + w;
-			}
 			break;
 		case EMove::SW:
-			if ((start + w) > (w * h - 1) || (start % w == 0))
-			{
-				return -1;
-			} else {
+			if (!((start + w) > (w * h - 1) || (start % w == 0)))
 				return start + w - 1;
-			}
 			break;
 		case EMove::W:
-			if (start % w == 0)
-			{
-				return -1;
-			} else {
+			if (!(start % w == 0))
 				return start - 1;
-			}
 			break;
 		case EMove::NW:
-			if ((start % w == 0) || (start < w))
-			{
-				return -1;
-			} else {
+			if (!((start % w == 0) || (start < w)))
 				return start - w - 1;
-			}
 			break;
 	}
-	assert(false);
 	return -1;
 }
 
-bool verify_word(const vector<char> &grid, const unsigned int &w, const unsigned int &h, vector<bool> visited, const string &word, int start)
+bool verify_word(const vector<char> &grid, const unsigned int &w, const unsigned int &h, const vector<bool> &visited, const string &word, int start)
 {
 	if (start == -1)
 	{
@@ -187,7 +154,6 @@ int main()
 		sum += item.second;
 		bucketed_letters.push_back(make_pair(item.first, sum));
 	}
-	//cout << "sum: " << sum << endl;
 	random_device rd;
 	int seed = rd();
 	//seed = -740863471;
