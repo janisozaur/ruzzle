@@ -75,7 +75,9 @@ int move(const unsigned int &start, const unsigned int &w, const unsigned int &h
 	return -1;
 }
 
-bool verify_word(const vector<char> &grid, const unsigned int &w, const unsigned int &h, const vector<bool> &visited, const char * const word, int start)
+bool verify_word(const vector<char> &grid, const unsigned int &w,
+		const unsigned int &h, const vector<bool> &visited,
+		const char * const word, int start)
 {
 	if (start == -1)
 	{
@@ -102,28 +104,26 @@ bool verify_word(const vector<char> &grid, const unsigned int &w, const unsigned
 		if (word[1] == '\0')
 		{
 			return true;
-		} else {
-			const char * const new_word = word + 1;
-			vector<bool> new_visited = visited;
-			new_visited[start] = true;
-			for (EMove m : EMove())
-			{
-				int new_start = move(start, w, h, m);
-				if (new_start == -1)
-				{
-					continue;
-				}
-				bool found = verify_word(grid, w, h, new_visited, new_word, new_start);
-				if (found)
-				{
-					return true;
-				}
-			}
-			return false;
 		}
-	} else {
+		const char * const new_word = word + 1;
+		vector<bool> new_visited = visited;
+		new_visited[start] = true;
+		for (const EMove m : EMove())
+		{
+			int new_start = move(start, w, h, m);
+			if (new_start == -1)
+			{
+				continue;
+			}
+			bool found = verify_word(grid, w, h, new_visited, new_word, new_start);
+			if (found)
+			{
+				return true;
+			}
+		}
 		return false;
 	}
+	return false;
 }
 
 int main()
