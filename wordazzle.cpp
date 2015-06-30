@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
 #include <random>
 #include <cassert>
 
@@ -139,13 +138,6 @@ int main()
 		cin >> letter >> freq;
 		letter_freqs.push_back(make_pair(letter, freq / 100.f));
 	}
-	struct {
-		bool operator()(const pair_lf left, const pair_lf right)
-		{
-			return left.second < right.second;
-		}
-	} pairwise_comparator;
-	sort(letter_freqs.begin(), letter_freqs.end(), pairwise_comparator);
 	vector<pair_lf> bucketed_letters;
 	float sum = 0.f;
 	for (const pair_lf &item : letter_freqs)
@@ -154,7 +146,7 @@ int main()
 		bucketed_letters.push_back(make_pair(item.first, sum));
 	}
 	random_device rd;
-	int seed = rd();
+	unsigned int seed = rd();
 	//seed = -740863471;
 	cout << "seed: " << seed << endl;
 	mt19937 gen(seed);
