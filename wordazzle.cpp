@@ -76,7 +76,7 @@ int move(const unsigned int &start, const unsigned int &w, const unsigned int &h
 	return -1;
 }
 
-bool verify_word(const vector<char> &grid, const unsigned int &w, const unsigned int &h, const vector<bool> &visited, const string &word, int start)
+bool verify_word(const vector<char> &grid, const unsigned int &w, const unsigned int &h, const vector<bool> &visited, const char * const word, int start)
 {
 	if (start == -1)
 	{
@@ -98,14 +98,13 @@ bool verify_word(const vector<char> &grid, const unsigned int &w, const unsigned
 	{
 		return false;
 	}
-	const unsigned int length = word.length();
-	if (grid[start] == word[length - 1])
+	if (grid[start] == word[0])
 	{
-		if (length == 1)
+		if (word[1] == '\0')
 		{
 			return true;
 		} else {
-			const string new_word = word.substr(0, length - 1);
+			const char * const new_word = word + 1;
 			vector<bool> new_visited = visited;
 			new_visited[start] = true;
 			for (EMove m : EMove())
@@ -192,7 +191,7 @@ int main()
 		const int length = word.length();
 		if (length >= 4 && length < grid_size)
 		{
-			bool found = verify_word(sampled_letters, w, h, visited, word, -1);
+			bool found = verify_word(sampled_letters, w, h, visited, word.c_str(), -1);
 			if (found)
 			{
 				cout << "found " << word << endl;
