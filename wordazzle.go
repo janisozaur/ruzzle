@@ -133,7 +133,7 @@ func sample_letter(letters []pair_lf, sample float32) rune {
 
 func print_grid(letters []rune, w, h int) {
 	for y := 0; y < h; y++ {
-		fmt.Printf("%q\n", letters[y * w: y * w + w])
+		fmt.Printf("%q\n", letters[y*w:y*w+w])
 	}
 }
 
@@ -148,7 +148,7 @@ func verify_word(grid []rune, w, h int, visited []bool, word string, start int) 
 		}
 		for y := 0; y < h; y++ {
 			for x := 0; x < w; x++ {
-				idx := y * w + x
+				idx := y*w + x
 				found := verify_word(grid, w, h, visited, word, idx)
 				if found {
 					return found
@@ -225,7 +225,7 @@ func main() {
 	var str string
 	var err error
 	err = nil
-	for ; err == nil ; _, err = fmt.Scanln(&str) {
+	for ; err == nil; _, err = fmt.Scanln(&str) {
 		found := verify_word(grid, w, h, visited, str, -1)
 		if found {
 			fmt.Println("found word " + str)
