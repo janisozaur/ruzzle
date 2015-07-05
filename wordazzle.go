@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"math/rand"
 	"unicode/utf8"
+	"time"
 )
 
 type EMove int
@@ -183,6 +184,13 @@ func verify_word(grid []rune, w, h int, visited []bool, word string, start int) 
 	return false
 }
 
+func find_word(grid []rune, w, h int, visited []bool, str string) {
+	found := verify_word(grid, w, h, visited, str, -1)
+	if found {
+		fmt.Println("found word " + str)
+	}
+}
+
 func main() {
 	var count int
 	fmt.Scanln(&count)
@@ -207,6 +215,8 @@ func main() {
 	var word string
 	fmt.Scanln(&word)
 	seed := int64(0)
+	seed = time.Now().UTC().UnixNano()
+	fmt.Printf("seed = %d\n", seed)
 	rand.Seed(seed)
 	if utf8.RuneCountInString(word) > grid_size {
 		panic("Word " + word + " is too large for given grid dimensions")
@@ -226,9 +236,6 @@ func main() {
 	var err error
 	err = nil
 	for ; err == nil; _, err = fmt.Scanln(&str) {
-		found := verify_word(grid, w, h, visited, str, -1)
-		if found {
-			fmt.Println("found word " + str)
-		}
+		find_word(grid, w, h, visited, str)
 	}
 }
