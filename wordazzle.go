@@ -137,6 +137,52 @@ func print_grid(letters []rune, w, h int) {
 	}
 }
 
+func verify_word(grid []rune, w, h int, visited []bool, word string, start int) bool {
+	if start == -1 {
+		if !utf8.ValidString(word) {
+			return false
+		}
+		size := utf8.RuneCountInString(word)
+		if size > len(grid) {
+			return false
+		}
+		for y := 0; y < h; y++ {
+			for x := 0; x < w; x++ {
+				idx := y * w + x
+				found := verify_word(grid, w, h, visited, word, idx)
+				if found {
+					return found
+				}
+			}
+		}
+		return false
+	}
+	if visited[start] {
+		return false
+	}
+	newrune, runesize := utf8.DecodeRuneInString(word)
+	if grid[start] == newrune {
+		if utf8.RuneCountInString(word) == 1 {
+			return true
+		}
+		newword := word[runesize:]
+		newvisited := make([]bool, len(visited))
+		copy(newvisited, visited)
+		newvisited[start] = true
+		for m := N; m < NW; m++ {
+			new_start := move(start, w, h, m)
+			if new_start == -1 {
+				continue
+			}
+			found := verify_word(grid, w, h, newvisited, newword, new_start)
+			if found {
+				return true
+			}
+		}
+	}
+	return false
+}
+
 func main() {
 	var count int
 	fmt.Scanln(&count)
@@ -171,4 +217,18 @@ func main() {
 		panic("No placement for word " + word + " and seed " + string(seed) + " could be found")
 	}
 	print_grid(grid, 4, 4)
+	visited := make([]bool, grid_size)
+	found := verify_word(grid, w, h, visited, word, -1)
+	if !found {
+		panic("word " + word + " was NOT found")
+	}
+	var str string
+	var err error
+	err = nil
+	for ; err == nil ; _, err = fmt.Scanln(&str) {
+		found := verify_word(grid, w, h, visited, str, -1)
+		if found {
+			fmt.Println("found word " + str)
+		}
+	}
 }
