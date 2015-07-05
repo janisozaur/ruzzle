@@ -226,7 +226,7 @@ func main() {
 	if valid != true {
 		panic("No placement for word " + word + " and seed " + string(seed) + " could be found")
 	}
-	print_grid(grid, 4, 4)
+	print_grid(grid, w, h)
 	visited := make([]bool, grid_size)
 	found := verify_word(grid, w, h, visited, word, -1)
 	if !found {
