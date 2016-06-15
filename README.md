@@ -1,9 +1,10 @@
 A simple word game.
 
 Compile:
-	`g++ wordazzle.cpp -o wordazzle -std=c++11`
+* C++: `g++ wordazzle.cpp -o wordazzle -std=c++11`
+* Go: `go build`
 
-Launch:
+Launch (same for both versions):
 	`(cat input ; echo redistribution ; cat words) | ./wordazzle`
 
 Input is of following format:
